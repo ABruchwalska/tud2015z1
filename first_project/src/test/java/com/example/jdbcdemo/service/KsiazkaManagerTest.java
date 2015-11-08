@@ -13,7 +13,7 @@ public class KsiazkaManagerTest {
 	
 	
 	KsiazkaManager ksiazkaManager = new KsiazkaManager();
-	AutorManager autorManager = new AutorManager(); /*czemu tu jest blad???*/
+	AutorManager autorManager = new AutorManager(); 
 	
 	private final static String TYTUL_1 = "Wiedzmin 1";
 	private final static String KAT_1 = "Fantasy";
@@ -78,11 +78,11 @@ public class KsiazkaManagerTest {
 		Ksiazka jeden = new Ksiazka(TYTUL_1, KAT_1, AUTORID_1);
 		ksiazkaManager.addKsiazka(jeden);		
 		assertEquals(TYTUL_1, jeden.getTytul());
-		ksiazkaManager.modifyKsiazka(TYTUL_1, KAT_1, AUTORID_1);
-		Ksiazka dwa = ksiazkaManager.getKsiazka(TYTUL_2); /*tutaj bylo "NAME_1",ale skoro to się odnosi do ksiazki dfrugiej to zmienilam tytul na 2*/
+		ksiazkaManager.modifyKsiazka(TYTUL_2, AUTORID_1);
+		Ksiazka dwa = ksiazkaManager.getKsiazka(TYTUL_2);
 		assertEquals(TYTUL_2, dwa.getTytul());
-		assertEquals(KAT_2, dwa.getKategoria());
-		assertEquals(AUTORID_2, dwa.getAutorId());
+		assertEquals(KAT_1, dwa.getKategoria());
+		assertEquals(AUTORID_1, dwa.getAutorId());
 	}
 	
 	@Test
@@ -105,9 +105,9 @@ public class KsiazkaManagerTest {
 	public void getKsiazkasByIdTest() {
 		autorManager.vanishAutors();
 		przedTestem();
-		Autor a = autorManager.getAutor("Sapkowski"); /*Powinno byc "Andrzej Sapkowski" ??? */
+		Autor a = autorManager.getAutor("Andrzej Sapkowski"); /*Powinno byc "Andrzej Sapkowski" ??? */
 		
-		assertEquals(a.getAutorPer(), "Sapkowski"); /* j.w.*/
+		assertEquals(a.getAutorPer(), "Andrzej Sapkowski"); /* j.w.*/
 		List<Ksiazka> ks = ksiazkaManager.getKsiazkasById(a.getId());
 		assertEquals(0, ks.size()); /*czym jest to 'size'?? */
 		Ksiazka jeden = new Ksiazka("Wiedzmin 1", "fantasy", a.getId());

@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import com.example.jdbcdemo.domain.Autor;
+import com.example.jdbcdemo.service.AutorManager;
 
 public class AutorManagerTest {
 
