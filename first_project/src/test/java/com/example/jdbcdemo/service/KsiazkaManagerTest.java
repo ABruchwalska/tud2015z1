@@ -11,7 +11,7 @@ import com.example.jdbcdemo.domain.Autor;
 
 public class KsiazkaManagerTest {
 	
-	
+	//tworze zmienne globalne uzywane w testach
 	KsiazkaManager ksiazkaManager = new KsiazkaManager();
 	AutorManager autorManager = new AutorManager(); 
 	
@@ -23,36 +23,30 @@ public class KsiazkaManagerTest {
 	private final static String KAT_2 = "Obyczajowa";
 	private final static long AUTORID_2 = 2;
 	
-	Autor Sapkowski;
-	Autor Nelson;
-	
+		
 	@Test
-	public void checkConnection(){
+	public void checkConnection(){ //sprawdam polaczenie do bazy
 		assertNotNull(ksiazkaManager.getConnection());
 	}
-	/***
-	 * Simply because object Ksiazka depends on Autor
-	 * we need to provide Autors in the actual database
-	 * before we check how the tests work
-	 */
-	public void przedTestem(){
-		Sapkowski = new Autor("Andrzej Sapkowski", 175, "polskie");
-		Nelson = new Autor("Jandy Nelson", 168, "amerykanskie");
+	
+	public void przedTestem(){//dodaje autorow do bazy danych, żeby książka działała
+		Autor Sapkowski = new Autor("Andrzej Sapkowski", 175, "polskie");
+		Autor Nelson = new Autor("Jandy Nelson", 168, "amerykanskie");
 		autorManager.addAutor(Sapkowski);
 		autorManager.addAutor(Nelson);
 	}
 	
 	@Test
-	public void checkAddKsiazka(){
-		przedTestem();
+	public void checkAddKsiazka(){ //sprawdza,czy ksiazka zostala dodana
+		przedTestem(); //dodaje autorow
 
-		Ksiazka ksiazka = new Ksiazka(TYTUL_1, KAT_1, AUTORID_1);
+		Ksiazka ksiazka = new Ksiazka(TYTUL_1, KAT_1, AUTORID_1); //dodaje ksiazki
 		
-		ksiazkaManager.clearKsiazkas();
-		assertEquals(1,ksiazkaManager.addKsiazka(ksiazka));
+		ksiazkaManager.clearKsiazkas(); //czyszcze baze danych z ksiazek
+		assertEquals(1,ksiazkaManager.addKsiazka(ksiazka)); //sprawdzam,czy metoda wykonala sie poprawnie
 		
-		List<Ksiazka> ksiazkas = ksiazkaManager.getAllKsiazkas();
-		Ksiazka ksiazkaRetrieved = ksiazkas.get(0);
+		List<Ksiazka> ksiazkas = ksiazkaManager.getAllKsiazkas(); //pobiera z bazy danych wszystkie ksiazki i wrzuca je do listy
+		Ksiazka ksiazkaRetrieved = ksiazkas.get(0); //pobierz z bazy danych ksiazke spod indeksu 0
 		
 		assertEquals(TYTUL_1, ksiazkaRetrieved.getTytul());
 		assertEquals(KAT_1, ksiazkaRetrieved.getKategoria());
@@ -61,15 +55,15 @@ public class KsiazkaManagerTest {
 	}
 	
 	@Test 
-	public void checkDeleteKsiazka(){
+	public void checkDeleteKsiazka(){ //sprawdza
 		ksiazkaManager.clearKsiazkas();
 		
 		Ksiazka ks = new Ksiazka(TYTUL_1, KAT_1, AUTORID_1);
 		assertEquals(1, ksiazkaManager.addKsiazka(ks));
 		
-		assertEquals(1, ksiazkaManager.deleteKsiazka(TYTUL_1, AUTORID_1));
+		assertEquals(1, ksiazkaManager.deleteKsiazka(TYTUL_1, AUTORID_1)); //trzeba dokladnie sprecyzowac czy ksiazka o danym tytule i autorze ma byc usunieta
 		
-		assertEquals(null, ksiazkaManager.getKsiazka(TYTUL_1));
+		assertEquals(null, ksiazkaManager.getKsiazka(TYTUL_1));//sprawdza czy nie ma ksiazki o tyt1 w bazie
 	}
 	
 	@Test
@@ -102,18 +96,18 @@ public class KsiazkaManagerTest {
 	}
 	
 	@Test
-	public void getKsiazkasByIdTest() {
+	public void getKsiazkasByIdTest() { //pobieramy wszystkie książki danego autora
 		autorManager.vanishAutors();
 		przedTestem();
-		Autor a = autorManager.getAutor("Andrzej Sapkowski"); /*Powinno byc "Andrzej Sapkowski" ??? */
+		Autor a = autorManager.getAutor("Andrzej Sapkowski"); //pobieram z bazy autora 
 		
-		assertEquals(a.getAutorPer(), "Andrzej Sapkowski"); /* j.w.*/
-		List<Ksiazka> ks = ksiazkaManager.getKsiazkasById(a.getId());
-		assertEquals(0, ks.size()); /*czym jest to 'size'?? */
-		Ksiazka jeden = new Ksiazka("Wiedzmin 1", "fantasy", a.getId());
-		ksiazkaManager.addKsiazka(jeden);
-		ks = ksiazkaManager.getKsiazkasById(a.getId());
-		assertEquals(1, ks.size());
+		assertEquals(a.getAutorPer(), "Andrzej Sapkowski"); //sprawdza czy pobrany autor na pewno nazywa sie Sapkowski
+		List<Ksiazka> ks = ksiazkaManager.getKsiazkasById(a.getId());// sciaga wszystkie ksiazki autora po "getid",zeby udowodnic w tescie, ze autor nie ma ksiazek,bo ich nie dodalam
+		assertEquals(0, ks.size()); //sprawdza czy dlugosc listy jest 0
+		Ksiazka jeden = new Ksiazka("Wiedzmin 1", "fantasy", a.getId()); //tworze ksiazke 
+		ksiazkaManager.addKsiazka(jeden); //dodaje ksiazke do bazy
+		ks = ksiazkaManager.getKsiazkasById(a.getId()); //sciagam ksiazki autora po 'getid'
+		assertEquals(1, ks.size());//sprwdzam,czy dl. lsty ks jest 1
 		
 	}
 
