@@ -37,10 +37,10 @@ public class KsiazkaManagerTest {
 	}
 	
 	@Test
-	public void checkAddKsiazka(){ //sprawdza,czy ksiazka zostala dodana
-		przedTestem(); //dodaje autorow
+	public void checkAddKsiazka(){ //sprawdza,czy ksiazka zostala dodana - przypisanie x do y; dodanie do tabeli x, 
+		przedTestem(); //dodaje autorow 
 
-		Ksiazka ksiazka = new Ksiazka(TYTUL_1, KAT_1, AUTORID_1); //dodaje ksiazki
+		Ksiazka ksiazka = new Ksiazka(TYTUL_1, KAT_1, AUTORID_1); //dodaje ksiazke do autora 
 		
 		ksiazkaManager.clearKsiazkas(); //czyszcze baze danych z ksiazek
 		assertEquals(1,ksiazkaManager.addKsiazka(ksiazka)); //sprawdzam,czy metoda wykonala sie poprawnie
@@ -55,7 +55,7 @@ public class KsiazkaManagerTest {
 	}
 	
 	@Test 
-	public void checkDeleteKsiazka(){ //sprawdza
+	public void checkDeleteKsiazka(){ //sprawdza czy usunięto książkę - usunięcie x z y
 		ksiazkaManager.clearKsiazkas();
 		
 		Ksiazka ks = new Ksiazka(TYTUL_1, KAT_1, AUTORID_1);
@@ -70,13 +70,13 @@ public class KsiazkaManagerTest {
 	public void checkModifyKsiazka(){
 		ksiazkaManager.clearKsiazkas();
 		Ksiazka jeden = new Ksiazka(TYTUL_1, KAT_1, AUTORID_1);
-		ksiazkaManager.addKsiazka(jeden);		
+		//ksiazkaManager.addKsiazka(jeden);		
 		assertEquals(TYTUL_1, jeden.getTytul());
 		ksiazkaManager.modifyKsiazka(TYTUL_2, AUTORID_1);
-		Ksiazka dwa = ksiazkaManager.getKsiazka(TYTUL_2);
-		assertEquals(TYTUL_2, dwa.getTytul());
-		assertEquals(KAT_1, dwa.getKategoria());
-		assertEquals(AUTORID_1, dwa.getAutorId());
+		Ksiazka jedenmod = ksiazkaManager.getKsiazka(TYTUL_2);
+		assertEquals(TYTUL_2, jedenmod.getTytul());
+		assertEquals(KAT_1, jedenmod.getKategoria());
+		assertEquals(AUTORID_1, jedenmod.getAutorId());
 	}
 	
 	@Test
@@ -96,7 +96,7 @@ public class KsiazkaManagerTest {
 	}
 	
 	@Test
-	public void getKsiazkasByIdTest() { //pobieramy wszystkie książki danego autora
+	public void getKsiazkasByIdTest() { //pobieramy wszystkie książki danego autora - pobranie x należących do y
 		autorManager.vanishAutors();
 		przedTestem();
 		Autor a = autorManager.getAutor("Andrzej Sapkowski"); //pobieram z bazy autora 
@@ -110,5 +110,7 @@ public class KsiazkaManagerTest {
 		assertEquals(1, ks.size());//sprwdzam,czy dl. lsty ks jest 1
 		
 	}
+	
 
 }
+

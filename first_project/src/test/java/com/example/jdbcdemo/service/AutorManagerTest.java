@@ -24,7 +24,7 @@ public class AutorManagerTest {
 	}
 	
 	@Test
-	public void addAutorTest(){ // Tworzenie nowego autora
+	public void addAutorTest(){ // Tworzenie nowego autora ; dodanie do tabeli y
 		Autor autor = new Autor(AUTORPER_1, WZROST_1, OBYWATELSTWO_1);
 		
 		autorManager.vanishAutors(); // czyści bazę, żeby uniknąć konfliktu z innymi testami. np. duplikat dodwania osoby itp.
@@ -84,7 +84,7 @@ public class AutorManagerTest {
 	}
 	
 	@Test
-	public void getAllAutorsTest(){ //sprawdza czy dziala getautor; zwraca liste autorow
+	public void getAllAutorsTest(){ //sprawdza czy dziala getautor; zwraca liste autorow - pobranie wszystkich y
 		autorManager.vanishAutors();
 		assertEquals(0, autorManager.getAllAutors().size());// sprawdza, czy długość listy jest 0
 		Autor Sapkowski = new Autor(AUTORPER_1, WZROST_1, OBYWATELSTWO_1);
