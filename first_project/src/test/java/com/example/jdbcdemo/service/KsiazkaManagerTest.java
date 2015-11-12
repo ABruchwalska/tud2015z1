@@ -70,7 +70,7 @@ public class KsiazkaManagerTest {
 	public void checkModifyKsiazka(){
 		ksiazkaManager.clearKsiazkas();
 		Ksiazka jeden = new Ksiazka(TYTUL_1, KAT_1, AUTORID_1);
-		//ksiazkaManager.addKsiazka(jeden);		
+		ksiazkaManager.addKsiazka(jeden);		
 		assertEquals(TYTUL_1, jeden.getTytul());
 		ksiazkaManager.modifyKsiazka(TYTUL_2, AUTORID_1);
 		Ksiazka jedenmod = ksiazkaManager.getKsiazka(TYTUL_2);
