@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import java.util.List;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import com.example.jdbcdemo.domain.Ksiazka;
@@ -29,6 +30,7 @@ public class KsiazkaManagerTest {
 		assertNotNull(ksiazkaManager.getConnection());
 	}
 	
+	@Before
 	public void przedTestem(){//dodaje autorow do bazy danych, żeby książka działała
 		Autor Sapkowski = new Autor("Andrzej Sapkowski", 175, "polskie");
 		Autor Nelson = new Autor("Jandy Nelson", 168, "amerykanskie");
@@ -38,7 +40,7 @@ public class KsiazkaManagerTest {
 	
 	@Test
 	public void checkAddKsiazka(){ //sprawdza,czy ksiazka zostala dodana - przypisanie x do y; dodanie do tabeli x, 
-		przedTestem(); //dodaje autorow 
+		 //dodaje autorow 
 
 		Ksiazka ksiazka = new Ksiazka(TYTUL_1, KAT_1, AUTORID_1); //dodaje ksiazke do autora 
 		
@@ -102,11 +104,11 @@ public class KsiazkaManagerTest {
 		Autor a = autorManager.getAutor("Andrzej Sapkowski"); //pobieram z bazy autora 
 		
 		assertEquals(a.getAutorPer(), "Andrzej Sapkowski"); //sprawdza czy pobrany autor na pewno nazywa sie Sapkowski
-		List<Ksiazka> ks = ksiazkaManager.getKsiazkasById(a.getId());// sciaga wszystkie ksiazki autora po "getid",zeby udowodnic w tescie, ze autor nie ma ksiazek,bo ich nie dodalam
+		List<Ksiazka> ks = ksiazkaManager.getKsiazkasById(a);// sciaga wszystkie ksiazki autora po "getid",zeby udowodnic w tescie, ze autor nie ma ksiazek,bo ich nie dodalam
 		assertEquals(0, ks.size()); //sprawdza czy dlugosc listy jest 0
 		Ksiazka jeden = new Ksiazka("Wiedzmin 1", "fantasy", a.getId()); //tworze ksiazke 
 		ksiazkaManager.addKsiazka(jeden); //dodaje ksiazke do bazy
-		ks = ksiazkaManager.getKsiazkasById(a.getId()); //sciagam ksiazki autora po 'getid'
+		ks = ksiazkaManager.getKsiazkasById(a); //sciagam ksiazki autora po 'getid'
 		assertEquals(1, ks.size());//sprwdzam,czy dl. lsty ks jest 1
 		
 	}

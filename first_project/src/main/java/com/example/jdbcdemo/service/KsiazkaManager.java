@@ -9,6 +9,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.example.jdbcdemo.domain.Autor;
 import com.example.jdbcdemo.domain.Ksiazka;
 
 public class KsiazkaManager {
@@ -156,11 +157,11 @@ public class KsiazkaManager {
 		return ksiazkas;
 	}
 	
-	public List<Ksiazka> getKsiazkasById(long id){
+	public List<Ksiazka> getKsiazkasById(Autor p){
 		List<Ksiazka> ksiazkas = new ArrayList<Ksiazka>();
 
 		try {
-			getKsiazkasByIdStmt.setLong(1, id);
+			getKsiazkasByIdStmt.setLong(1, p.getId());
 			ResultSet rs = getKsiazkasByIdStmt.executeQuery();
 
 			while (rs.next()) {
